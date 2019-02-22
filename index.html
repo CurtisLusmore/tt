@@ -1,0 +1,65 @@
+<html>
+  <head>
+    <script src="confetti.min.js"></script>
+    <style>
+      body {
+        width: 100%;
+        margin: 0;
+      }
+      button {
+        width: 50%;
+      }
+      button.big {
+        font-size: 50vh;
+        height: 80vh;
+      }
+      button.small {
+        font-size: 10vh;
+        height: 20vh;
+      }
+      canvas {
+        position: absolute;
+        left: 0;
+        top: 0;
+      }
+    </style>
+    <script>
+      maxParticleCount = 1000;
+      const count = function (event) {
+        const elem = event.target;
+        const number = parseInt(elem.innerHTML);
+        const newNumber = number + 1;
+        elem.innerHTML = newNumber;
+        if (newNumber === 5) {
+          win();
+        }
+      };
+      const undo = function (id) {
+        const elem = document.getElementById(id);
+        const number = parseInt(elem.innerHTML);
+        elem.innerHTML = number - 1;
+      };
+      const win = function () {
+        const canvas = document.getElementById('confetti-canvas')
+        canvas.style.display = null;
+        canvas.style.height = '100%';
+        canvas.style.width = '100%';
+        canvas.height = canvas.offsetHeight;
+        canvas.width = canvas.offsetWidth;
+        startConfetti();
+      };
+      const reset = function () {
+        document.getElementById('confetti-canvas').style.display = 'none';
+        document.getElementById('1').innerHTML = 0;
+        document.getElementById('2').innerHTML = 0;
+        stopConfetti();
+        removeConfetti();
+      }
+    </script>
+  </head>
+  <body>
+    <button id="1" class="big" onclick="count(event)">0</button><button id="2" class="big" onclick="count(event)">0</button>
+    <button class="small" onclick="undo(1)">-1</button><button class="small" onclick="undo(2)">-1</button>
+    <canvas id="confetti-canvas" style="display: none;" height="100%" width="100%" onclick="reset()"></canvas>
+  </body>
+</html>
