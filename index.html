@@ -1,5 +1,8 @@
+<!DOCTYPE html>
 <html>
   <head>
+    <meta charset="UTF-8">
+    <title>Table Tennis Scorer</title>
     <script src="confetti.min.js"></script>
     <style>
       body {
@@ -30,7 +33,7 @@
         const number = parseInt(elem.innerHTML);
         const newNumber = number + 1;
         elem.innerHTML = newNumber;
-        if (newNumber === 5) {
+        if (newNumber === 21) {
           win();
         }
       };
