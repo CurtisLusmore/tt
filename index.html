@@ -9,14 +9,17 @@
         width: 100%;
         margin: 0;
       }
-      button {
+      span {
+        display: inline-block;
+        text-align: center;
         width: 50%;
+        cursor: pointer;
       }
-      button.big {
-        font-size: 50vh;
+      span.big {
+        font-size: 70vh;
         height: 80vh;
       }
-      button.small {
+      span.small {
         font-size: 10vh;
         height: 20vh;
       }
@@ -61,8 +64,8 @@
     </script>
   </head>
   <body>
-    <button id="1" class="big" onclick="count(event)">0</button><button id="2" class="big" onclick="count(event)">0</button>
-    <button class="small" onclick="undo(1)">-1</button><button class="small" onclick="undo(2)">-1</button>
+    <span id="1" class="big" onclick="count(event)">0</span><span id="2" class="big" onclick="count(event)">0</span>
+    <span class="small" onclick="undo(1)">-1</span><span class="small" onclick="undo(2)">-1</span>
     <canvas id="confetti-canvas" style="display: none;" height="100%" width="100%" onclick="reset()"></canvas>
   </body>
 </html>
