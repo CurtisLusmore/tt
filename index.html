@@ -49,6 +49,12 @@
         const utterance = new SpeechSynthesisUtterance(text);
         window.speechSynthesis.speak(utterance);
       };
+      const taunts = [
+        'You win',
+        'GG mate',
+        'Suck it, losers!',
+        "I've seen some people suck before but you were the suckiest bunch of sucks that ever sucked"
+      ];
       maxParticleCount = 1000;
       const count = function (id) {
         const other = (id+1)%2;
@@ -72,7 +78,8 @@
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
         startConfetti();
-        talk('Suck it losers');
+        const taunt = taunts[Math.floor(Math.random()*taunts.length)]
+        talk(taunt);
       };
       const reset = function () {
         document.getElementById('confetti-canvas').style.display = 'none';
@@ -96,7 +103,6 @@
       recognition.start();
       recognition.onresult = function (event) {
         const sound = event.results[0][0].transcript.toLowerCase();
-        console.log(sound);
         const red = sound => sound[0] === 'r';
         const blue = sound => sound[0] === 'b';
         if (red(sound)) count(0);
