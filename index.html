@@ -29,21 +29,29 @@
         top: 0;
       }
     </style>
+  </head>
+  <body>
+    <span id="0" class="big" onclick="count(0)">0</span><span id="1" class="big" onclick="count(1)">0</span>
+    <span class="small" onclick="undo(0)">-1</span><span class="small" onclick="undo(1)">-1</span>
+    <canvas id="confetti-canvas" style="display: none;" height="100%" width="100%" onclick="reset()"></canvas>
     <script>
+      const counters = [
+        document.getElementById('0'),
+        document.getElementById('1')
+      ]
       maxParticleCount = 1000;
-      const count = function (event) {
-        const elem = event.target;
-        const number = parseInt(elem.innerHTML);
-        const newNumber = number + 1;
-        elem.innerHTML = newNumber;
-        if (newNumber === 21) {
+      const count = function (id) {
+        const other = (id+1)%2;
+        const scores = counters.map(elem => parseInt(elem.innerHTML));
+        counters[id].innerHTML = ++scores[id];
+        if (scores[id] === 21 && scores[other] <= 19 ||
+          scores[id] > 21 && scores[id]-2 >= scores[other]) {
           win();
         }
       };
       const undo = function (id) {
-        const elem = document.getElementById(id);
-        const number = parseInt(elem.innerHTML);
-        elem.innerHTML = number - 1;
+        const elem = counters[id];
+        elem.innerHTML = parseInt(elem.innerHTML) - 1;
       };
       const win = function () {
         const canvas = document.getElementById('confetti-canvas')
@@ -56,16 +64,11 @@
       };
       const reset = function () {
         document.getElementById('confetti-canvas').style.display = 'none';
-        document.getElementById('1').innerHTML = 0;
-        document.getElementById('2').innerHTML = 0;
+        counters[0].innerHTML = 0;
+        counters[1].innerHTML = 0;
         stopConfetti();
         removeConfetti();
       }
     </script>
-  </head>
-  <body>
-    <span id="1" class="big" onclick="count(event)">0</span><span id="2" class="big" onclick="count(event)">0</span>
-    <span class="small" onclick="undo(1)">-1</span><span class="small" onclick="undo(2)">-1</span>
-    <canvas id="confetti-canvas" style="display: none;" height="100%" width="100%" onclick="reset()"></canvas>
   </body>
 </html>
