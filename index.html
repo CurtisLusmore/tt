@@ -28,22 +28,33 @@
         left: 0;
         top: 0;
       }
+      #red {
+        color: red;
+      }
+      #blue {
+        color: blue;
+      }
     </style>
   </head>
   <body>
-    <span id="0" class="big" onclick="count(0)">0</span><span id="1" class="big" onclick="count(1)">0</span>
+    <span id="red" class="big" onclick="count(0)">0</span><span id="blue" class="big" onclick="count(1)">0</span>
     <span class="small" onclick="undo(0)">-1</span><span class="small" onclick="undo(1)">-1</span>
     <canvas id="confetti-canvas" style="display: none;" height="100%" width="100%" onclick="reset()"></canvas>
     <script>
       const counters = [
-        document.getElementById('0'),
-        document.getElementById('1')
+        document.getElementById('red'),
+        document.getElementById('blue')
       ]
+      const talk = function (text) {
+        const utterance = new SpeechSynthesisUtterance(text);
+        window.speechSynthesis.speak(utterance);
+      };
       maxParticleCount = 1000;
       const count = function (id) {
         const other = (id+1)%2;
         const scores = counters.map(elem => parseInt(elem.innerHTML));
         counters[id].innerHTML = ++scores[id];
+        talk(`${scores[0]} ${scores[1]}`);
         if (scores[id] === 21 && scores[other] <= 19 ||
           scores[id] > 21 && scores[id]-2 >= scores[other]) {
           win();
@@ -61,6 +72,7 @@
         canvas.height = canvas.offsetHeight;
         canvas.width = canvas.offsetWidth;
         startConfetti();
+        talk('Suck it losers');
       };
       const reset = function () {
         document.getElementById('confetti-canvas').style.display = 'none';
@@ -68,6 +80,32 @@
         counters[1].innerHTML = 0;
         stopConfetti();
         removeConfetti();
+      }
+    </script>
+    <script>
+      var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+      var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+      const recognition = new SpeechRecognition();
+      const speechRecognitionList = new SpeechGrammarList();
+      const grammar = '#JSGF V1.0; grammar scores; public <score> = red | blue | undo ;'
+      speechRecognitionList.addFromString(grammar, 1);
+      recognition.grammars = speechRecognitionList;
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+      recognition.start();
+      recognition.onresult = function (event) {
+        const sound = event.results[0][0].transcript.toLowerCase();
+        console.log(sound);
+        const red = sound => sound[0] === 'r';
+        const blue = sound => sound[0] === 'b';
+        if (red(sound)) count(0);
+        else if (blue(sound)) count(1);
+        recognition.stop();
+      }
+      recognition.onend = function () {
+        recognition.stop();
+        setTimeout(function () { recognition.start(); }, 2000);
       }
     </script>
   </body>
