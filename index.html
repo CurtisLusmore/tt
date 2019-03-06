@@ -103,8 +103,8 @@
       recognition.start();
       recognition.onresult = function (event) {
         const sound = event.results[0][0].transcript.toLowerCase();
-        const red = sound => sound[0] === 'r';
-        const blue = sound => sound[0] === 'b';
+        const red = sound => sound === 'red';
+        const blue = sound => sound === 'blue';
         if (red(sound)) count(0);
         else if (blue(sound)) count(1);
         recognition.stop();
