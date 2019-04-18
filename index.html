@@ -92,30 +92,30 @@
     </script>
     <script>
       const body = document.body;
-      var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
-      var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
-      const recognition = new SpeechRecognition();
-      const speechRecognitionList = new SpeechGrammarList();
-      const grammar = '#JSGF V1.0; grammar scores; public <score> = red | black ;'
-      speechRecognitionList.addFromString(grammar, 1);
-      recognition.grammars = speechRecognitionList;
-      recognition.lang = 'en-US';
-      recognition.interimResults = false;
-      recognition.continuous = true;
-      recognition.maxAlternatives = 1;
-      recognition.start();
-      recognition.onresult = function (event) {
-        const sound = event.results[0][0].transcript.toLowerCase();
-        const red = sound => sound === 'red';
-        const black = sound => sound === 'black';
-        if (red(sound)) count(0);
-        else if (black(sound)) count(1);
-        recognition.stop();
-      }
-      recognition.onend = function () {
-        recognition.stop();
-        setTimeout(function () { recognition.start(); }, 0);
-      }
+      // var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+      // var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+      // const recognition = new SpeechRecognition();
+      // const speechRecognitionList = new SpeechGrammarList();
+      // const grammar = '#JSGF V1.0; grammar scores; public <score> = red | black ;'
+      // speechRecognitionList.addFromString(grammar, 1);
+      // recognition.grammars = speechRecognitionList;
+      // recognition.lang = 'en-US';
+      // recognition.interimResults = false;
+      // recognition.continuous = true;
+      // recognition.maxAlternatives = 1;
+      // recognition.start();
+      // recognition.onresult = function (event) {
+      //   const sound = event.results[0][0].transcript.toLowerCase();
+      //   const red = sound => sound === 'red';
+      //   const black = sound => sound === 'black';
+      //   if (red(sound)) count(0);
+      //   else if (black(sound)) count(1);
+      //   recognition.stop();
+      // }
+      // recognition.onend = function () {
+      //   recognition.stop();
+      //   setTimeout(function () { recognition.start(); }, 0);
+      // }
     </script>
   </body>
 </html>
